@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Smileys</string>
+    <string name="classic">Classic</string>
+    <string name="freeplay">Freeplay</string>
+    <string name="intense">Intense</string>
+    <string name="stats">Stats</string>
+</resources>
