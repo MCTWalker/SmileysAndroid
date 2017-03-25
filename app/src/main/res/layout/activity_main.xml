@@ -6,17 +6,17 @@
     android:background="@color/mainColor"
     android:layout_height="match_parent">
     <com.example.smileys.Smiley
-    android:id="@+id/smiley1"
-    android:layout_width="60dp"
-    android:layout_height="wrap_content"
-    android:scaleType="fitXY"
-    android:adjustViewBounds="true"
-    android:layout_centerHorizontal="true"
-    android:src="@drawable/smiley"
+        android:id="@+id/smiley1"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/smiley"
     />
     <com.example.smileys.Smiley
         android:id="@+id/smiley2"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
@@ -25,7 +25,7 @@
         />
     <com.example.smileys.Smiley
         android:id="@+id/smiley3"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"

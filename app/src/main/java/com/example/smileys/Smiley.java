@@ -28,9 +28,20 @@ public class Smiley extends ImageView {
     public boolean endless = true;
     private Handler myHandler;
     private int counter = 0;
+    private Timer timer;
+    private Context appContext;
+
+    public Smiley(Context context) {
+        super(context);
+        initializeView();
+    }
 
     public Smiley(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initializeView();
+    }
+
+    public void initializeView(){
         myHandler = new Handler();
         DisplayMetrics displayMetrics = new DisplayMetrics();
         ((Activity) getContext()).getWindowManager()
@@ -47,7 +58,7 @@ public class Smiley extends ImageView {
         vx = 0.0f;
         counter = 0;
         bouncing = true;
-        float rand_x = (float) Math.random() * (canvasWidth);
+        float rand_x = (float) Math.random() * (canvasWidth - this.getWidth());
         this.setX(rand_x);
     }
 
@@ -56,7 +67,8 @@ public class Smiley extends ImageView {
         invalidate();
         this.setVisibility(View.VISIBLE);
         final View v = this;
-        new Timer().scheduleAtFixedRate(new TimerTask(){
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
                 v.post(new Runnable() {
@@ -67,18 +79,20 @@ public class Smiley extends ImageView {
                     }
                 });
             }
-        },0,16);
+        },0,12);
     }
 
     public void update() {
-        if (counter == 459 && endless){
+        if (counter == 400 && endless){
             resetVars();
             bouncing = true;
         }
         counter++;
-        if (bouncing == false)
-        {
+        if (bouncing == false && endless){
             return;
+        } else if (bouncing == false){
+            timer.cancel();
+            this.setVisibility(View.GONE);
         }
         diameter = this.getWidth();
         // Now, lets make the ball move by adding the velocity vectors to its position
@@ -89,7 +103,7 @@ public class Smiley extends ImageView {
         //Perfect! Now, lets make it rebound when it touches the floor
         if(this.getY() + diameter > canvasHeight) {
             // First, reposition the ball on top of the floor and then bounce it!
-            if (Math.abs(vy) < 8) {
+            if (Math.abs(vy) < 12) {
                 bouncing = false;
                 //shapes.splice(index, 1);
                 return;

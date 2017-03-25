@@ -1,9 +1,16 @@
 package com.example.smileys;
 
+import android.content.Context;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.Timer;
@@ -18,6 +25,7 @@ public class ClassicActivity extends AppCompatActivity {
     String countdownText = "Time Left: 30";
     Integer countdownValue = 30;
     int counter = 0;
+    AttributeSet smileyAttrs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,16 +36,19 @@ public class ClassicActivity extends AppCompatActivity {
                 "fonts/ComicNeue-Bold.ttf");
         countdownTxt.setTypeface(face);
 
-        int countdownValue = 30;
         new Timer().scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
-                createNewSmiley();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        createNewSmiley();
+                    }
+                });
             }
-        },0,500);
+        },0,400);
 
         new Timer().scheduleAtFixedRate(new TimerTask(){
-
             @Override
             public void run(){
                 runOnUiThread(new Runnable() {
@@ -51,12 +62,32 @@ public class ClassicActivity extends AppCompatActivity {
 
     }
 
+    public int getImgResource(Context context, String name) {
+        int resId = context.getResources().getIdentifier(name, "drawable", "com.example.smileys");
+        return resId;
+    }
+
     private void decrementCountdown(TextView v) {
         v.setText("Time Left: " + countdownValue.toString());
         countdownValue--;
     }
 
     private void createNewSmiley(){
-
+        final Context c = ClassicActivity.this;
+        final Smiley smiley = new Smiley(c);
+        smiley.setLayoutParams(new ViewGroup.LayoutParams((int) SmileyUtil.pxFromDp(c, 100f), ViewGroup.LayoutParams.WRAP_CONTENT));
+        smiley.setImageResource(getImgResource(c, "gray_smiley"));
+        smiley.setScaleType(ImageView.ScaleType.FIT_XY);
+        smiley.setAdjustViewBounds(true);
+        smiley.endless = false;
+        smiley.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                smiley.setImageResource(getImgResource(c, "smiley"));
+            }
+        });
+        FrameLayout fl = (FrameLayout) findViewById(R.id.classic_layout);
+        fl.addView(smiley);
+        smiley.move();
     }
 }
