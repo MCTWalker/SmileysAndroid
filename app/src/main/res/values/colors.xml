@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="mainColor">#77abff</color>
     <color name="mainText">#FFFFFF</color>
+    <color name="seeThrough">#C14242</color>
 </resources>

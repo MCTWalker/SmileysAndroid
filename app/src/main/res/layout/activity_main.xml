@@ -1,74 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     android:background="@color/mainColor"
-    android:gravity="center_horizontal"
-    tools:context="com.example.smileys.MainActivity">
-
-    <android.support.v7.widget.AppCompatTextView
-        android:id="@+id/smileysText"
-        android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+    <com.example.smileys.Smiley
+    android:id="@+id/smiley1"
+    android:layout_width="60dp"
+    android:layout_height="wrap_content"
+    android:scaleType="fitXY"
+    android:adjustViewBounds="true"
+    android:layout_centerHorizontal="true"
+    android:src="@drawable/smiley"
+    />
+    <com.example.smileys.Smiley
+        android:id="@+id/smiley2"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:textSize="60dp"
-        android:text="@string/app_name"
-        android:textColor="@color/mainText">
-    </android.support.v7.widget.AppCompatTextView>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_height="wrap_content">
-
-        <Button
-            android:theme="@style/MainBtn"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:text="@string/classic" />
-
-        <Button
-            android:theme="@style/MainBtn"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/freeplay" />
-
-        <Button
-            android:theme="@style/MainBtn"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:text="@string/intense" />
-
-    </LinearLayout>
-
-    <Button
-        android:theme="@style/MainBtn"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/stats" />
-
-    <ImageView
-        android:id="@+id/frosty_hat"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:scaleType="fitXY"
         android:adjustViewBounds="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/grass"
+        android:src="@drawable/smiley"
         />
+    <com.example.smileys.Smiley
+        android:id="@+id/smiley3"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/smiley"
+        />
+    <LinearLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        tools:context="com.example.smileys.MainActivity">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/smileysText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:textSize="60dp"
+            android:text="@string/app_name"
+            android:textColor="@color/mainText">
+        </android.support.v7.widget.AppCompatTextView>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_classic"
+                android:theme="@style/MainBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/classic" />
+
+            <Button
+                android:theme="@style/MainBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/freeplay" />
+
+            <Button
+                android:theme="@style/MainBtn"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/intense" />
+
+        </LinearLayout>
+
+        <Button
+            android:theme="@style/MainBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/stats" />
+
+        <ImageView
+            android:id="@+id/grass"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:scaleType="fitXY"
+            android:adjustViewBounds="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/grass"
+            />
 
 
-</LinearLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
