@@ -4,4 +4,8 @@
     <string name="freeplay">Freeplay</string>
     <string name="intense">Intense</string>
     <string name="stats">Stats</string>
+    <string name="heresAJoke">Here\'s the joke:</string>
+    <string name="playAgain">Play Again</string>
+    <string name="menu">Menu</string>
+    <string name="classicInstructions">Catch the smileys before they disappear!</string>
 </resources>

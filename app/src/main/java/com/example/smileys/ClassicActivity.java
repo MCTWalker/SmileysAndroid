@@ -1,6 +1,7 @@
 package com.example.smileys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,8 +25,11 @@ public class ClassicActivity extends AppCompatActivity {
     Handler myHandler = new Handler();
     String countdownText = "Time Left: 30";
     Integer countdownValue = 30;
+    Timer countdownTimer = new Timer();
+    Timer smileyTimer = new Timer();
     int counter = 0;
     AttributeSet smileyAttrs;
+    Integer numCaught = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +40,7 @@ public class ClassicActivity extends AppCompatActivity {
                 "fonts/ComicNeue-Bold.ttf");
         countdownTxt.setTypeface(face);
 
-        new Timer().scheduleAtFixedRate(new TimerTask(){
+        smileyTimer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
                 runOnUiThread(new Runnable() {
@@ -48,7 +52,7 @@ public class ClassicActivity extends AppCompatActivity {
             }
         },0,400);
 
-        new Timer().scheduleAtFixedRate(new TimerTask(){
+        countdownTimer.scheduleAtFixedRate(new TimerTask(){
             @Override
             public void run(){
                 runOnUiThread(new Runnable() {
@@ -70,11 +74,25 @@ public class ClassicActivity extends AppCompatActivity {
     private void decrementCountdown(TextView v) {
         v.setText("Time Left: " + countdownValue.toString());
         countdownValue--;
+        if (countdownValue == -1){
+            countdownTimer.cancel();
+            smileyTimer.cancel();
+            openEndScreen();
+        }
+    }
+
+    public void openEndScreen(){
+        Intent intent = new Intent(this, EndScreenActivity.class);
+        intent.putExtra("numCaught", numCaught);
+        intent.putExtra("prevActivity", "classic");
+        startActivity(intent);
+        this.finish();
     }
 
     private void createNewSmiley(){
         final Context c = ClassicActivity.this;
         final Smiley smiley = new Smiley(c);
+        final TextView numCaughtTxt =(TextView)findViewById(R.id.txt_caughtNum);
         smiley.setLayoutParams(new ViewGroup.LayoutParams((int) SmileyUtil.pxFromDp(c, 100f), ViewGroup.LayoutParams.WRAP_CONTENT));
         smiley.setImageResource(getImgResource(c, "gray_smiley"));
         smiley.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -84,6 +102,8 @@ public class ClassicActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 smiley.setImageResource(getImgResource(c, "smiley"));
+                numCaught++;
+                numCaughtTxt.setText(numCaught.toString());
             }
         });
         FrameLayout fl = (FrameLayout) findViewById(R.id.classic_layout);
