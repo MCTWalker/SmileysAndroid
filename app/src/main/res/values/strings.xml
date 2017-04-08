@@ -7,5 +7,7 @@
     <string name="heresAJoke">Here\'s the joke:</string>
     <string name="playAgain">Play Again</string>
     <string name="menu">Menu</string>
+    <string name="highScores">High Scores:</string>
+    <string name="highScoresClassic">Classic:</string>
     <string name="classicInstructions">Catch the smileys before they disappear!</string>
 </resources>

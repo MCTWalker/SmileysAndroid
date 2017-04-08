@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "390084576896",
+    "firebase_url": "https://smileys-6cfa7.firebaseio.com",
+    "project_id": "smileys-6cfa7",
+    "storage_bucket": "smileys-6cfa7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:390084576896:android:965dda4028217a33",
+        "android_client_info": {
+          "package_name": "com.example.smileys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "390084576896-nj27u54mm4gavgi5b1297ac60sf41e6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smileys",
+            "certificate_hash": "654829301f0dd16d8016b8c57e68300c97bc7e72"
+          }
+        },
+        {
+          "client_id": "390084576896-e9idgff7022esv25hl9k2l9a9mdgc277.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNOuuXidbPsapJYqLyk95aKBaR5PHwx6s"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "390084576896-e9idgff7022esv25hl9k2l9a9mdgc277.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

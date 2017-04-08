@@ -29,10 +29,17 @@ public class MainActivity extends AppCompatActivity {
         tv.setTypeface(face);
 
         Button classicBtn = (Button)findViewById(R.id.btn_classic);
+        Button statsBtn = (Button)findViewById(R.id.btn_stats);
         classicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openClassic();
+            }
+        });
+        statsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openStats();
             }
         });
 
@@ -63,5 +70,10 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ClassicActivity.class);
         startActivity(intent);
         this.finish();
+    }
+
+    public void openStats(){
+        Intent intent = new Intent(this, StatsActivity.class);
+        startActivity(intent);
     }
 }
