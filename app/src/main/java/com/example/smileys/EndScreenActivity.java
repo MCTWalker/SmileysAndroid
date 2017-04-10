@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.Calendar;
@@ -21,6 +22,8 @@ import java.util.Calendar;
 public class EndScreenActivity extends AppCompatActivity {
 
     private final String TAG = "EndScreenActivity";
+    boolean newHighScore = false;
+    ScoreObject score = new ScoreObject();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,34 +31,53 @@ public class EndScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_end_screen);
 
         // Write a message to the database
-        ScoreObject score = new ScoreObject();
         score.userid = Secure.getString(this.getContentResolver(),
                 Secure.ANDROID_ID);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-
-        Integer numCaught = getIntent().getIntExtra("numCaught", 0);
+        final Integer numCaught = getIntent().getIntExtra("numCaught", 0);
         final String prev = getIntent().getStringExtra("prevActivity");
+        final Integer totalCreated = getIntent().getIntExtra("total", 0);
         Calendar c = Calendar.getInstance();
+        DatabaseReference myRef = database.child("users").child(score.userid).child(prev + "scores");
+        final Query topScore = myRef
+                .orderByChild("score").limitToLast(1);
 
         score.score = numCaught;
         score.date = c.getTime();
         score.isAuthorized = true;
 
-        database.child(prev + "Scores").push().setValue(score);
-        database.child("users").child(score.userid).child("scores").push().setValue(score);
+        topScore.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot scoreSnapshot: dataSnapshot.getChildren()) {
+                    ScoreObject highScore = scoreSnapshot.getValue(ScoreObject.class);
+                    updateHighScore(highScore);
+                    TextView vNumCaught = (TextView) findViewById(R.id.youCaughtText);
+                    if (newHighScore)
+                        vNumCaught.setText("Congratulations, you caught " + numCaught.toString() + " smileys! That's a new highscore!");
+                    else if (numCaught > 0)
+                        vNumCaught.setText("You caught " + numCaught.toString() + " out of " + totalCreated +" smileys!");
+                    else {
+                        vNumCaught.setText("You caught " + numCaught.toString() + " smileys. Were you sleeping?");
+                    }
+                }
 
-        TextView vNumCaught = (TextView) findViewById(R.id.youCaughtText);
-        if (numCaught > 0)
-            vNumCaught.setText("You caught " + numCaught.toString() + " smileys, enough to make a joke!");
-        else {
-            vNumCaught.setText("You caught " + numCaught.toString() + " smileys. Were you sleeping?");
-            ImageView joke = (ImageView) findViewById(R.id.img_joke);
-            joke.setVisibility(View.GONE);
-            TextView vJokeText = (TextView) findViewById(R.id.jokeText);
-            vJokeText.setVisibility(View.GONE);
-        }
+                topScore.removeEventListener(this);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+        database.child(prev + "Scores").push().setValue(score);
+        database.child("users").child(score.userid).child(prev + "scores").push().setValue(score);
+
         Button btnAgain = (Button) findViewById(R.id.btn_play_again);
         Button btnMenu = (Button) findViewById(R.id.btn_menu);
+        Button btnHighScores = (Button) findViewById(R.id.btn_highscores);
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,19 +85,35 @@ public class EndScreenActivity extends AppCompatActivity {
                     openClassic();
             }
         });
-
         btnMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openMenu();
             }
         });
+        btnHighScores.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openStats();
+            }
+        });
+    }
+
+    private void updateHighScore(ScoreObject highScore) {
+        if (highScore == null || score.score > highScore.score){
+            newHighScore = true;
+        }
     }
 
     public void openClassic(){
         Intent intent = new Intent(this, ClassicActivity.class);
         startActivity(intent);
         this.finish();
+    }
+
+    public void openStats(){
+        Intent intent = new Intent(this, StatsActivity.class);
+        startActivity(intent);
     }
 
     public void openMenu(){

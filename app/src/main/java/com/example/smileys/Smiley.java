@@ -26,6 +26,7 @@ public class Smiley extends ImageView {
     public int canvasWidth = 700;
     public float diameter = 60;
     public boolean endless = true;
+    public boolean caught = false;
     private Handler myHandler;
     private int counter = 0;
     private Timer timer;
