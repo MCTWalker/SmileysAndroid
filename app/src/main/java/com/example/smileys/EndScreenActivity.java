@@ -54,11 +54,11 @@ public class EndScreenActivity extends AppCompatActivity {
                     updateHighScore(highScore);
                     TextView vNumCaught = (TextView) findViewById(R.id.youCaughtText);
                     if (newHighScore)
-                        vNumCaught.setText("Congratulations, you caught " + numCaught.toString() + " smileys! That's a new highscore!");
+                        vNumCaught.setText("Congratulations, you scored " + numCaught.toString() + "! That's a new highscore!");
                     else if (numCaught > 0)
-                        vNumCaught.setText("You caught " + numCaught.toString() + " out of " + totalCreated +" smileys!");
+                        vNumCaught.setText("You scored " + numCaught.toString() + " out of " + totalCreated +" smileys!");
                     else {
-                        vNumCaught.setText("You caught " + numCaught.toString() + " smileys. Were you sleeping?");
+                        vNumCaught.setText("You scored " + numCaught.toString() + ". Were you sleeping?");
                     }
                 }
 
