@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
         Button classicBtn = (Button)findViewById(R.id.btn_classic);
         Button statsBtn = (Button)findViewById(R.id.btn_stats);
+        Button intenseBtn = (Button)findViewById(R.id.btn_intense);
+
         classicBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,7 +44,12 @@ public class MainActivity extends AppCompatActivity {
                 openStats();
             }
         });
-
+        intenseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openIntense();
+            }
+        });
 
         final Smiley smiley1 = (Smiley) findViewById(R.id.smiley1);
         final Smiley smiley2 = (Smiley) findViewById(R.id.smiley2);
@@ -68,6 +75,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void openClassic(){
         Intent intent = new Intent(this, ClassicActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    public void openIntense(){
+        Intent intent = new Intent(this, IntenseActivity.class);
         startActivity(intent);
         this.finish();
     }

@@ -4,11 +4,14 @@ package com.example.smileys;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -27,10 +30,12 @@ public class Smiley extends ImageView {
     public float diameter = 60;
     public boolean endless = true;
     public boolean caught = false;
+    public boolean frowny = false;
     private Handler myHandler;
     private int counter = 0;
     private Timer timer;
-    private Context appContext;
+    public IntenseActivity ia = null;
+    Random rand = new Random();
 
     public Smiley(Context context) {
         super(context);
@@ -59,8 +64,52 @@ public class Smiley extends ImageView {
         vx = 0.0f;
         counter = 0;
         bouncing = true;
-        float rand_x = (float) Math.random() * (canvasWidth - this.getWidth());
+        float rand_x = (float) rand.nextInt(canvasWidth - (int) SmileyUtil.pxFromDp(this.getContext(), 100f));
         this.setX(rand_x);
+    }
+
+    public void fall() {
+        final Smiley element = this;
+        resetVars();
+        invalidate();
+        this.setVisibility(View.VISIBLE);
+        final View v = this;
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask(){
+            @Override
+            public void run(){
+                v.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        boolean lost = updateFall();
+                        invalidate();
+                        if (lost && !caught && ia != null) {
+                            ia.setLives(ia.lives - 1);
+                            if (ia.lives == 0){
+                                ia.openEndScreen();
+                            }
+                            ia.startFloatingScore((int)element.getX(), (int)element.getY());
+                        }
+                    }
+                });
+            }
+        },0,12);
+    }
+
+    public boolean updateFall(){
+        // Now, lets make the ball move by adding the velocity vectors to its position
+        this.setY(this.getY() + vy);
+        // Ohh! The ball is moving!
+        // Lets add some acceleration
+        vy += gravity;
+
+        if (this.getY() > canvasHeight){
+            timer.cancel();
+            this.setVisibility(View.GONE);
+            return true;
+        }
+
+        return false;
     }
 
     public void move(){

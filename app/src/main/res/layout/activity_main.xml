@@ -70,29 +70,23 @@
 
             <Button
                 android:theme="@style/MainBtn"
+                android:id="@+id/btn_intense"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="#d6d6d6"
-                android:text="@string/freeplay" />
+                android:text="@string/intense" />
+
 
             <Button
                 android:theme="@style/MainBtn"
+                android:id="@+id/btn_stats"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:textColor="#d6d6d6"
-                android:text="@string/intense" />
+                android:text="@string/stats" />
 
         </LinearLayout>
 
-        <Button
-            android:theme="@style/MainBtn"
-            android:id="@+id/btn_stats"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/stats" />
 
         <ImageView
             android:id="@+id/grass"

@@ -36,7 +36,6 @@ public class EndScreenActivity extends AppCompatActivity {
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         final Integer numCaught = getIntent().getIntExtra("numCaught", 0);
         final String prev = getIntent().getStringExtra("prevActivity");
-        final Integer totalCreated = getIntent().getIntExtra("total", 0);
         Calendar c = Calendar.getInstance();
         DatabaseReference myRef = database.child("users").child(score.userid).child(prev + "scores");
         final Query topScore = myRef
@@ -55,9 +54,13 @@ public class EndScreenActivity extends AppCompatActivity {
                     TextView vNumCaught = (TextView) findViewById(R.id.youCaughtText);
                     if (newHighScore)
                         vNumCaught.setText("Congratulations, you scored " + numCaught.toString() + "! That's a new highscore!");
-                    else if (numCaught > 0)
-                        vNumCaught.setText("You scored " + numCaught.toString() + " out of " + totalCreated +" smileys!");
-                    else {
+                    else if (numCaught > 0 && prev.equals("intense")) {
+                        vNumCaught.setText("You scored " + numCaught.toString() + "!");
+                    }
+                    else if (numCaught > 0 && prev.equals("classic")) {
+                        final Integer totalCreated = getIntent().getIntExtra("total", 0);
+                        vNumCaught.setText("You scored " + numCaught.toString() + " out of " + totalCreated + " smileys!");
+                    }else {
                         vNumCaught.setText("You scored " + numCaught.toString() + ". Were you sleeping?");
                     }
                 }
@@ -83,6 +86,8 @@ public class EndScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (prev.equals("classic"))
                     openClassic();
+                if (prev.equals("intense"))
+                    openIntense();
             }
         });
         btnMenu.setOnClickListener(new View.OnClickListener() {
@@ -107,6 +112,12 @@ public class EndScreenActivity extends AppCompatActivity {
 
     public void openClassic(){
         Intent intent = new Intent(this, ClassicActivity.class);
+        startActivity(intent);
+        this.finish();
+    }
+
+    public void openIntense(){
+        Intent intent = new Intent(this, IntenseActivity.class);
         startActivity(intent);
         this.finish();
     }

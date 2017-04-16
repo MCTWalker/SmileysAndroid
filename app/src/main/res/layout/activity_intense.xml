@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/intense_layout"
+    android:background="@color/mainColor"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_lives"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="top|left"
+        android:text="Lives: 3"
+        android:textSize="30dp"
+        android:textColor="@color/mainText">
+    </android.support.v7.widget.AppCompatTextView>
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/txt_caughtNumI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="20dp"
+        android:text="0"
+        android:textSize="30dp"
+        android:textColor="@color/mainText">
+    </android.support.v7.widget.AppCompatTextView>
+
+</FrameLayout>

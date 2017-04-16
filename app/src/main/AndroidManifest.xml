@@ -32,8 +32,10 @@
             android:name=".EndScreenActivity"
             android:screenOrientation="landscape"
             android:theme="@style/Theme.AppCompat.NoActionBar" />
-        <activity android:name=".StatsActivity"
-            android:theme="@style/MyTheme" ></activity>
+        <activity
+            android:name=".StatsActivity"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".IntenseActivity"></activity>
     </application>
 
 </manifest>
