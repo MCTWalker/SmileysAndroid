@@ -1,6 +1,7 @@
 package com.example.smileys;
 
 import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -63,8 +64,8 @@ public class EndScreenActivity extends AppCompatActivity {
                     }else {
                         vNumCaught.setText("You scored " + numCaught.toString() + ". Were you sleeping?");
                     }
+                    vNumCaught.invalidate();
                 }
-
                 topScore.removeEventListener(this);
             }
 
@@ -78,9 +79,9 @@ public class EndScreenActivity extends AppCompatActivity {
         database.child(prev + "Scores").push().setValue(score);
         database.child("users").child(score.userid).child(prev + "scores").push().setValue(score);
 
-        Button btnAgain = (Button) findViewById(R.id.btn_play_again);
-        Button btnMenu = (Button) findViewById(R.id.btn_menu);
-        Button btnHighScores = (Button) findViewById(R.id.btn_highscores);
+        final Button btnAgain = (Button) findViewById(R.id.btn_play_again);
+        final Button btnMenu = (Button) findViewById(R.id.btn_menu);
+        final Button btnHighScores = (Button) findViewById(R.id.btn_highscores);
         btnAgain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +103,26 @@ public class EndScreenActivity extends AppCompatActivity {
                 openStats();
             }
         });
+
+        btnAgain.setVisibility(View.INVISIBLE);
+        btnMenu.setVisibility(View.INVISIBLE);
+        btnHighScores.setVisibility(View.INVISIBLE);
+
+        Handler myHandler = new Handler();
+        myHandler.postDelayed(new Runnable(){
+
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        btnAgain.setVisibility(View.VISIBLE);
+                        btnMenu.setVisibility(View.VISIBLE);
+                        btnHighScores.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        }, 1000);
     }
 
     private void updateHighScore(ScoreObject highScore) {
@@ -124,6 +145,7 @@ public class EndScreenActivity extends AppCompatActivity {
 
     public void openStats(){
         Intent intent = new Intent(this, StatsActivity.class);
+        intent.putExtra("prevActivity", getIntent().getStringExtra("prevActivity"));
         startActivity(intent);
     }
 

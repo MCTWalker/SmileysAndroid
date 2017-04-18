@@ -20,8 +20,8 @@ public class IntenseActivity extends AppCompatActivity {
     Handler myHandler = new Handler();
     Integer numCaught = 0;
     public Integer lives = 3;
-    int smileyRate = 900;
-    int frownyRate = 900;
+    int smileyRate = 1000;
+    int frownyRate = 1500;
     Random rand = new Random();
     Timer smileyTimer = new Timer();
 
@@ -35,7 +35,7 @@ public class IntenseActivity extends AppCompatActivity {
             public void run() {
                 createNewSmiley();
             }
-        }, 500);
+        }, smileyRate);
 
         myHandler.postDelayed(new Runnable(){
             @Override
@@ -177,7 +177,6 @@ public class IntenseActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EndScreenActivity.class);
         intent.putExtra("numCaught", numCaught);
         intent.putExtra("prevActivity", "intense");
-        intent.putExtra("total", 0);
         startActivity(intent);
         this.finish();
     }

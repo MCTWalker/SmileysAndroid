@@ -1,0 +1,28 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--<item
+        android:id="@+id/top_hat"
+        android:icon="@drawable/tophat"
+        android:title="@string/action_favorite"
+        app:showAsAction="ifRoom"/>-->
+    <item
+        android:id="@+id/own_classic"
+        android:title="Classic"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/own_intense"
+        android:title="Intense"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/worldwide_classic"
+        android:title="Worldwide Classic"
+        app:showAsAction="never"/>
+
+    <item android:id="@+id/worldwide_intense"
+        android:title="Worldwide Intense"
+        app:showAsAction="never"/>
+
+
+</menu>
