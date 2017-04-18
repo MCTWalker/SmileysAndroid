@@ -35,7 +35,9 @@
         <activity
             android:name=".StatsActivity"
             android:theme="@style/MyTheme" />
-        <activity android:name=".IntenseActivity"></activity>
+        <activity
+            android:name=".IntenseActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>

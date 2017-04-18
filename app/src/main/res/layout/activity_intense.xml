@@ -28,4 +28,14 @@
         android:textColor="@color/mainText">
     </android.support.v7.widget.AppCompatTextView>
 
+    <android.support.v7.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:textSize="30dp"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:text="Catch the smileys before they fall!"
+        android:textColor="@color/mainText">
+    </android.support.v7.widget.AppCompatTextView>
+
 </FrameLayout>

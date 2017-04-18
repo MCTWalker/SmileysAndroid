@@ -11,6 +11,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,9 +31,9 @@ public class StatsActivity extends AppCompatActivity {
     private RecyclerView.LayoutManager mLayoutManager;
     private RecyclerView.Adapter mAdapter;
     private String[] myDataset = new String[1000];
-    private String[] modeKeys = {"classicScores"};
     private SimpleDateFormat sdf = new SimpleDateFormat("MMM d yyyy");
     private String selected = "classic";
+    private String state = "own";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +46,29 @@ public class StatsActivity extends AppCompatActivity {
 
         ActionBar supportBar = getSupportActionBar();
         supportBar.setDisplayHomeAsUpEnabled(true);
-        supportBar.setTitle(getResources().getString(R.string.highScores) + " - " + selected);
         supportBar.setBackgroundDrawable(colorDrawable);
 
         getSupportActionBar().setHomeAsUpIndicator(upArrow);
 
+        String prev = getIntent().getStringExtra("prevActivity");
+
+        if (prev != null)
+            selected = prev;
+
+        updateToolbarTitle();
+        updateScores();
+    }
+
+    private void updateToolbarTitle(){
+        ActionBar supportBar = getSupportActionBar();
+        if (state.equals("own"))
+            supportBar.setTitle(getResources().getString(R.string.highScores) + " - " + selected);
+        else {
+            supportBar.setTitle("Worldwide " + getResources().getString(R.string.highScores) + " - " + selected);
+        }
+    }
+
+    private void updateScores() {
         mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
         // use a linear layout manager
         mLayoutManager = new LinearLayoutManager(this);
@@ -56,7 +77,12 @@ public class StatsActivity extends AppCompatActivity {
         String userid = Settings.Secure.getString(this.getContentResolver(),
                 Settings.Secure.ANDROID_ID);
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
-        DatabaseReference myRef = database.child("users").child(userid).child(selected + "scores");
+        DatabaseReference myRef;
+        if (state.equals("own")){
+            myRef = database.child("users").child(userid).child(selected + "scores");
+        } else {
+            myRef = database.child(selected + "Scores");
+        }
         Query topScores = myRef
                 .orderByChild("score");
 
@@ -95,6 +121,44 @@ public class StatsActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.own_classic:
+                state = "own";
+                selected = "classic";
+                break;
+            case R.id.own_intense:
+                state = "own";
+                selected = "intense";
+                break;
+            case R.id.worldwide_classic:
+                state = "worldwide";
+                selected = "classic";
+                break;
+            case R.id.worldwide_intense:
+                state = "worldwide";
+                selected = "intense";
+                break;
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+        }
+
+        updateToolbarTitle();
+        updateScores();
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
